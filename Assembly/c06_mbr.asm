@@ -16,7 +16,7 @@ start:
 		mov ax, 0xb800				; 设置附加段基地址
 		mov es, ax
 
-		cld
+		cld							; 对方向标志位DF清零
 		mov si, mytext
 		mov di, 0
 		mov cx, (number-mytext)/2   ; 实际上等于13
@@ -28,7 +28,7 @@ start:
 		; 计算各个数位
 		mov bx, ax
 		mov cx, 5				 	; 循环次数
-		mov si, 10					; 处数
+		mov si, 10					; 除数
 digit:
 		xor dx, dx
 		div si
@@ -52,5 +52,6 @@ show:
 
 		jmp near $
 
+; $表示当前地址, $$表示段的起始地址, $-$$表示汇编实体的大小, 510-($-$$)表示剩余的需要填充的地址
 times 510-($-$$) db 0
 				 db 0x55, 0xaa
