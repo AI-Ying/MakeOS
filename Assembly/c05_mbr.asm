@@ -2,11 +2,13 @@
 ; 文件说明：硬盘主引导扇区代码
 
 
+; 0xb800为显卡加载时的显存位置,且循环读取.
 mov ax, 0xb800               ; 指向文本模式的显示缓冲区
 mov es, ax
 
 
 ; 以下显示字符串“Label offset:”
+; 0x07表示：背景色为黑色,前景色为白色,且无闪烁,无加亮.
 mov byte [es:0x00], 'L'
 mov byte [es:0x01], 0x07
 mov byte [es:0x02], 'a'
@@ -35,7 +37,7 @@ mov byte [es:0x18], ':'
 mov byte [es:0x19], 0x07
 
 mov ax, number                 ; 取得标号number的偏移地址
-mov bx, 10
+mov bx, 10    				   ; 除数为10
 
 ; 设置数据段的基地址
 mov cx, cs
@@ -80,7 +82,7 @@ mov byte [es:0x1d], 0x04
 mov al, [0x7c00+number+0x02]
 add al, 0x30
 mov [es:0x1e], al
-mov byte es:0x1f], 0x04
+mov byte [es:0x1f], 0x04
 
 mov al, [0x7c00+number+0x01]
 add al, 0x30
